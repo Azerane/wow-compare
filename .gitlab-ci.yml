@@ -1,0 +1,21 @@
+image: node:10.14.0
+
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  script:
+    - yarn install
+    - yarn run lint
+
+build:
+  stage: build
+  script:
+    - yarn install
+    - yarn run build
+  only:
+    - staging
+    - production
