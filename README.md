@@ -1,5 +1,7 @@
 # wow-compare
-````yarn install
-yarn start````
+````
+yarn install
+yarn start
+````
 
 mirroring to github
