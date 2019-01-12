@@ -1,0 +1,45 @@
+image: node:10.14.0
+
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  script:
+    - yarn install
+    - yarn run lint
+
+build:
+  stage: build
+  script:
+    - yarn install
+    - yarn run build
+  only:
+    - staging
+    - production
+
+deploy_staging:
+  type: deploy
+  stage: deploy
+  image: ruby:latest
+  script:
+    - apt-get update -y
+    - apt-get install rubygems -y
+    - gem install dpl
+    - dpl --provider=heroku --app=wow-compare-staging --api-key=$HEROKU_API_KEY --skip_cleanup
+  only:
+    - staging
+
+deploy_production:
+  type: deploy
+  stage: deploy
+  image: ruby:latest
+  script:
+    - apt-get update -y
+    - apt-get install rubygems -y
+    - gem install dpl
+    - dpl --provider=heroku --app=wow-compare --api-key=$HEROKU_API_KEY --skip_cleanup
+  only:
+    - production
