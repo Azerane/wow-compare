@@ -1,2 +1,1 @@
-bot: yarn add serve
-web: serve -s build
+web: yarn add serve && serve -s public
