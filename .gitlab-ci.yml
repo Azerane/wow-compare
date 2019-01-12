@@ -16,6 +16,11 @@ build:
   script:
     - yarn install
     - yarn run build
+    - rm -rf public
+    - mv build public
+  artifacts:
+    paths:
+      - public
   only:
     - staging
     - production
@@ -23,6 +28,8 @@ build:
 deploy_staging:
   type: deploy
   stage: deploy
+  dependencies:
+    - build
   image: ruby:latest
   script:
     - apt-get update -y
@@ -35,6 +42,8 @@ deploy_staging:
 deploy_production:
   type: deploy
   stage: deploy
+  dependencies:
+    - build
   image: ruby:latest
   script:
     - apt-get update -y
