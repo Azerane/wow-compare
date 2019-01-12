@@ -1,1 +1,1 @@
-web: yarn add serve && serve -s build
+web: yarn add serve && serve -s public
