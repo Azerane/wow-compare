@@ -1,1 +1,1 @@
-web: yarn add serve && serve -s public
+web: node server.js
