@@ -36,11 +36,12 @@ async function getRaiderIo(playerName, playerRealm) {
     });
 }
 
-async function getWarcraftLog(playerName, playerRealm) {
+async function getWarcraftLog(playerName, playerRealm, metrics) {
   return axios
     .get(`https://www.warcraftlogs.com/v1/parses/character/${playerName}/${playerRealm}/eu`, {
       params: {
         api_key: config.api_key.warcraft_log,
+        metric: metrics,
       },
     })
     .then(response => reformatData(response.data, playerName, playerRealm))

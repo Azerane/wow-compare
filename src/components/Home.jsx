@@ -22,16 +22,26 @@ class Home extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { players, getRaiderIo, getWarcraftLog } = this.props;
     const oldPlayers = prevProps.players;
+    const roles = ['HEALING', 'DPS', 'ANY', 'TANK', 'ANY', 'ANY', 'ANY'];
+    const metricsMapping = {
+      DPS: 'dps',
+      HEALING: 'hps',
+      TANKING: 'krsi',
+    };
     if (players.group.length !== oldPlayers.group.length
       || players.queue.length !== oldPlayers.queue.length) {
       players.group.forEach((player) => {
-        getRaiderIo(player.name, player.realm).then(() => {
-          getWarcraftLog(player.name, player.realm);
+        getRaiderIo(player.name, player.realm).then((raiderIoProfile) => {
+          let playerRole = roles[player.role];
+          if (playerRole === 'ANY') playerRole = raiderIoProfile.player.active_spec_role;
+          getWarcraftLog(player.name, player.realm, metricsMapping[playerRole]);
         });
       });
       players.queue.forEach((player) => {
-        getRaiderIo(player.name, player.realm).then(() => {
-          getWarcraftLog(player.name, player.realm);
+        getRaiderIo(player.name, player.realm).then((raiderIoProfile) => {
+          let playerRole = roles[player.role];
+          if (playerRole === 'ANY') playerRole = raiderIoProfile.player.active_spec_role;
+          getWarcraftLog(player.name, player.realm, metricsMapping[playerRole]);
         });
       });
     }
@@ -69,16 +79,16 @@ const mapDispatchToProps = dispatch => ({
     dispatch(raiderIoRequest(playerName, playerRealm))
       .then(result => (
         dispatch(raiderIoSuccess(result))
-      )).catch(error => (
-        dispatch(raiderIoFailure(error))
+      )).catch(() => (
+        dispatch(raiderIoFailure({ name: playerName, realm: playerRealm }))
       ))
   ),
-  getWarcraftLog: (playerName, playerRealm) => (
-    dispatch(warcraftLogRequest(playerName, playerRealm))
+  getWarcraftLog: (playerName, playerRealm, metrics) => (
+    dispatch(warcraftLogRequest(playerName, playerRealm, metrics))
       .then(result => (
         dispatch(warcraftLogSuccess(result))
-      )).catch(error => (
-        dispatch(warcraftLogFailure(error))
+      )).catch(() => (
+        dispatch(warcraftLogFailure({ name: playerName, realm: playerRealm }))
       ))
   ),
 });
