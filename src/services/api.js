@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import config from '../config';
 
 const reformatData = (warcraftLogParses, playerName, playerRealm) => {
@@ -20,6 +21,21 @@ const reformatData = (warcraftLogParses, playerName, playerRealm) => {
   };
 };
 
+const saveWacraftLogResult = (playerName, playerRealm, result) => {
+  localStorage.setItem(
+    `${playerName},${playerRealm}`,
+    JSON.stringify({ ...result, timestamp: moment().format() }),
+  );
+};
+
+const getWarcraftLogResult = (playerName, playerRealm) => {
+  const result = JSON.parse(localStorage.getItem(`${playerName},${playerRealm}`));
+  if (result && moment(result.timestamp).isSameOrAfter(moment().subtract(1, 'days'))) {
+    return result;
+  }
+  return null;
+};
+
 async function getRaiderIo(playerName, playerRealm) {
   return axios
     .get('https://raider.io/api/v1/characters/profile?', {
@@ -37,6 +53,14 @@ async function getRaiderIo(playerName, playerRealm) {
 }
 
 async function getWarcraftLog(playerName, playerRealm, metrics) {
+  const oldData = getWarcraftLogResult(playerName, playerRealm);
+  if (oldData) {
+    const promise = new Promise((resolve, reject) => {
+      resolve(oldData);
+    });
+
+    return promise.then(res => res);
+  }
   return axios
     .get(`https://www.warcraftlogs.com/v1/parses/character/${playerName}/${playerRealm}/eu`, {
       params: {
@@ -44,7 +68,11 @@ async function getWarcraftLog(playerName, playerRealm, metrics) {
         metric: metrics,
       },
     })
-    .then(response => reformatData(response.data, playerName, playerRealm))
+    .then((response) => {
+      const data = reformatData(response.data, playerName, playerRealm);
+      saveWacraftLogResult(playerName, playerRealm, data);
+      return data;
+    })
     .catch((error) => {
       throw error;
     });

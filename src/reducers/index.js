@@ -99,6 +99,7 @@ function baseReducer(state = {}, action) {
         raid_progression: [],
         region: 'eu',
         thumbnail_url: '',
+        warcraftLogRes: 0,
       };
       if (findedPlayer) {
         if (findedPlayer.base === 'group') {
@@ -143,6 +144,7 @@ function baseReducer(state = {}, action) {
                 .concat({
                   ...playersFromState.group[findedPlayer.index],
                   parses: action.player.parses,
+                  warcraftLogRes: 200,
                 })
                 .concat(
                   playersFromState.group.slice(
@@ -161,6 +163,7 @@ function baseReducer(state = {}, action) {
               .concat({
                 ...playersFromState.queue[findedPlayer.index],
                 parses: action.player.parses,
+                warcraftLogRes: 200,
               })
               .concat(
                 playersFromState.queue.slice(findedPlayer.index + 1, playersFromState.queue.length),
@@ -183,6 +186,7 @@ function baseReducer(state = {}, action) {
                 .concat({
                   ...playersFromState.group[findedPlayer.index],
                   parses: [],
+                  warcraftLogRes: action.player.warcraftLogRes,
                 })
                 .concat(
                   playersFromState.group.slice(
@@ -201,6 +205,7 @@ function baseReducer(state = {}, action) {
               .concat({
                 ...playersFromState.queue[findedPlayer.index],
                 parses: [],
+                warcraftLogRes: action.player.warcraftLogRes,
               })
               .concat(
                 playersFromState.queue.slice(findedPlayer.index + 1, playersFromState.queue.length),

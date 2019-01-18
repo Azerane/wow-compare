@@ -86,9 +86,13 @@ const mapDispatchToProps = dispatch => ({
   getWarcraftLog: (playerName, playerRealm, metrics) => (
     dispatch(warcraftLogRequest(playerName, playerRealm, metrics))
       .then(result => (
-        dispatch(warcraftLogSuccess(result))
-      )).catch(() => (
-        dispatch(warcraftLogFailure({ name: playerName, realm: playerRealm }))
+        dispatch(warcraftLogSuccess({ ...result, warcraftLogRes: 200 }))
+      )).catch(error => (
+        dispatch(warcraftLogFailure({
+          name: playerName,
+          realm: playerRealm,
+          warcraftLogRes: error.response.status,
+        }))
       ))
   ),
 });
