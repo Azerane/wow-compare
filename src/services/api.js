@@ -101,7 +101,6 @@ async function getGrades(playerName, playerRealm, data) {
   const {
     raidProgression, raiderIoScore, ilvl, parseAvg,
   } = data;
-  console.warn(raidProgression, raiderIoScore, ilvl, parseAvg);
   return {
     name: playerName,
     realm: playerRealm,

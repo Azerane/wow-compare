@@ -57,7 +57,11 @@ class Home extends React.PureComponent {
       if (playerRole === 'ANY') playerRole = raiderIoProfile.player.active_spec_role;
       const raidProgression = (Object.prototype.hasOwnProperty.call(raiderIoProfile.player, 'raid_progression')
         && Object.prototype.hasOwnProperty.call(raiderIoProfile.player.raid_progression, raidName)
-        ? raiderIoProfile.player.raid_progression[raidName] : 0);
+        ? raiderIoProfile.player.raid_progression[raidName] : {
+          heroic_bosses_killed: 0,
+          mythic_bosses_killed: 0,
+          normal_bosses_killed: 0,
+        });
       const raiderIoScore = (Object.prototype.hasOwnProperty.call(raiderIoProfile.player, 'mythic_plus_scores')
         && Object.prototype.hasOwnProperty.call(raiderIoProfile.player.mythic_plus_scores, 'all')
         ? raiderIoProfile.player.mythic_plus_scores.all : 0);
