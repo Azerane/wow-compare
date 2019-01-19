@@ -4,6 +4,10 @@ import config from '../config';
 
 const reformatData = (warcraftLogParses, playerName, playerRealm) => {
   const parses = {};
+  let parseMax = 0;
+  let parseAvg = 0;
+  let metricMax = 0;
+  let metricAvg = 0;
   config.wow_raid.encounters.forEach((encounter) => {
     parses[encounter.id] = {
       id: encounter.id,
@@ -12,12 +16,27 @@ const reformatData = (warcraftLogParses, playerName, playerRealm) => {
     };
   });
   warcraftLogParses.forEach((parse) => {
+    if (parse.percentile > parseMax) parseMax = parse.percentile;
+    parseAvg += parse.percentile;
+    if (parse.total > metricMax) metricMax = parse.total;
+    metricAvg += parse.total;
     parses[parse.encounterID].parses.push(parse);
   });
+  if (warcraftLogParses.length !== 0) {
+    metricAvg /= warcraftLogParses.length;
+  }
+  if (warcraftLogParses.length !== 0) {
+    parseAvg /= warcraftLogParses.length;
+  }
+
   return {
     name: playerName,
     realm: playerRealm,
-    parses,
+    data: parses,
+    parseAvg,
+    parseMax,
+    metricMax,
+    metricAvg,
   };
 };
 

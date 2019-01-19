@@ -93,7 +93,13 @@ function baseReducer(state = {}, action) {
         gender: '',
         honorable_kills: 0,
         mythic_plus_scores: [],
-        parses: [],
+        parses: {
+          data: [],
+          parseMax: 0,
+          parseAvg: 0,
+          metricMax: 0,
+          metricAvg: 0,
+        },
         profile_url: '',
         race: '',
         raid_progression: [],
@@ -143,7 +149,13 @@ function baseReducer(state = {}, action) {
                 .slice(0, findedPlayer.index)
                 .concat({
                   ...playersFromState.group[findedPlayer.index],
-                  parses: action.player.parses,
+                  parses: {
+                    data: action.player.data,
+                    parseMax: action.player.parseMax,
+                    parseAvg: action.player.parseAvg,
+                    metricMax: action.player.metricMax,
+                    metricAvg: action.player.metricAvg,
+                  },
                   warcraftLogRes: 200,
                 })
                 .concat(
@@ -162,7 +174,13 @@ function baseReducer(state = {}, action) {
               .slice(0, findedPlayer.index)
               .concat({
                 ...playersFromState.queue[findedPlayer.index],
-                parses: action.player.parses,
+                parses: {
+                  data: action.player.data,
+                  parseMax: action.player.parseMax,
+                  parseAvg: action.player.parseAvg,
+                  metricMax: action.player.metricMax,
+                  metricAvg: action.player.metricAvg,
+                },
                 warcraftLogRes: 200,
               })
               .concat(
@@ -177,6 +195,13 @@ function baseReducer(state = {}, action) {
     case 'WARCRAFTLOG_FAILURE': {
       const playersFromState = state.players;
       const findedPlayer = findPlayer(action.player.name, action.player.realm, playersFromState);
+      const emptyParse = {
+        data: [],
+        parseMax: 0,
+        parseAvg: 0,
+        metricMax: 0,
+        metricAvg: 0,
+      };
       if (findedPlayer) {
         if (findedPlayer.base === 'group') {
           return Object.assign({}, state, {
@@ -185,7 +210,7 @@ function baseReducer(state = {}, action) {
                 .slice(0, findedPlayer.index)
                 .concat({
                   ...playersFromState.group[findedPlayer.index],
-                  parses: [],
+                  parses: emptyParse,
                   warcraftLogRes: action.player.warcraftLogRes,
                 })
                 .concat(
@@ -204,7 +229,7 @@ function baseReducer(state = {}, action) {
               .slice(0, findedPlayer.index)
               .concat({
                 ...playersFromState.queue[findedPlayer.index],
-                parses: [],
+                parses: emptyParse,
                 warcraftLogRes: action.player.warcraftLogRes,
               })
               .concat(
