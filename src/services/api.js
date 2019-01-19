@@ -97,9 +97,28 @@ async function getWarcraftLog(playerName, playerRealm, metrics) {
     });
 }
 
+async function getGrades(playerName, playerRealm, data) {
+  const {
+    raidProgression, raiderIoScore, ilvl, parseAvg,
+  } = data;
+  console.warn(raidProgression, raiderIoScore, ilvl, parseAvg);
+  return {
+    name: playerName,
+    realm: playerRealm,
+    grades: {
+      progression: 0,
+      score: 0,
+      ilvl: 0,
+      parse: 0,
+      total: 0,
+    },
+  };
+}
+
 const apiServices = {
   getRaiderIo,
   getWarcraftLog,
+  getGrades,
 };
 
 export default apiServices;

@@ -241,6 +241,48 @@ function baseReducer(state = {}, action) {
       }
       return Object.assign({}, state, {});
     }
+    case 'GRADES_SUCCESS': {
+      const playersFromState = state.players;
+      const findedPlayer = findPlayer(action.player.name, action.player.realm, playersFromState);
+      if (findedPlayer) {
+        if (findedPlayer.base === 'group') {
+          return Object.assign({}, state, {
+            players: {
+              group: playersFromState.group
+                .slice(0, findedPlayer.index)
+                .concat({
+                  ...playersFromState.group[findedPlayer.index],
+                  grades: action.player.grades,
+                  warcraftLogRes: 200,
+                })
+                .concat(
+                  playersFromState.group.slice(
+                    findedPlayer.index + 1,
+                    playersFromState.group.length,
+                  ),
+                ),
+              queue: playersFromState.queue,
+            },
+          });
+        }
+        return Object.assign({}, state, {
+          players: {
+            queue: playersFromState.queue
+              .slice(0, findedPlayer.index)
+              .concat({
+                ...playersFromState.queue[findedPlayer.index],
+                grades: action.player.grades,
+                warcraftLogRes: 200,
+              })
+              .concat(
+                playersFromState.queue.slice(findedPlayer.index + 1, playersFromState.queue.length),
+              ),
+            group: playersFromState.group,
+          },
+        });
+      }
+      return Object.assign({}, state, {});
+    }
     default:
       return state;
   }

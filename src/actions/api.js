@@ -33,3 +33,20 @@ export const warcraftLogRequest = (playerName, playerRealm, metrics) => (dispatc
   });
   return apiServices.getWarcraftLog(playerName, playerRealm, metrics);
 };
+
+export const gradesSuccess = player => ({
+  type: 'GRADES_SUCCESS',
+  player,
+});
+
+export const gradesFailure = player => ({
+  type: 'GRADES_FAILURE',
+  player,
+});
+
+export const gradesRequest = (playerName, playerRealm, data) => (dispatch) => {
+  dispatch({
+    type: 'GRADES_REQUEST',
+  });
+  return apiServices.getGrades(playerName, playerRealm, data);
+};
