@@ -16,6 +16,7 @@ import {
 import './Home.css';
 import Header from './Header/Header';
 import SearchBar from './SearchBar/SearchBar';
+import PlayerOverview from './PlayerOverview/PlayerOverview';
 
 class Home extends React.PureComponent {
   componentDidUpdate(prevProps) {
@@ -86,11 +87,13 @@ class Home extends React.PureComponent {
   }
 
   render() {
+    const { players } = this.props;
     return (
       <div>
         <Header />
         <div className="main-container">
           <SearchBar />
+          {players.group.length > 0 && <PlayerOverview part="group" />}
         </div>
       </div>);
   }
