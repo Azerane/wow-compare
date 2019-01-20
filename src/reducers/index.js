@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux';
 
+const unifyString = string => string
+  .toLowerCase()
+  .replace(' ', '-')
+  .replace("'", '')
+  .replace('à', 'a');
+
 function findPlayer(playerName, playerRealm, players) {
   let base = '';
   let indexFinded = 0;
   players.group.forEach((player, index) => {
     if (
       player.name.toLowerCase() === playerName.toLowerCase()
-      && player.realm.toLowerCase()
-        === playerRealm
-          .toLowerCase()
-          .replace(' ', '-')
-          .replace("'", '')
+      && unifyString(player.realm) === unifyString(playerRealm)
     ) {
       base = 'group';
       indexFinded = index;
@@ -19,11 +21,7 @@ function findPlayer(playerName, playerRealm, players) {
   players.queue.forEach((player, index) => {
     if (
       player.name.toLowerCase() === playerName.toLowerCase()
-      && player.realm.toLowerCase()
-        === playerRealm
-          .toLowerCase()
-          .replace(' ', '-')
-          .replace("'", '')
+      && unifyString(player.realm) === unifyString(playerRealm)
     ) {
       base = 'queue';
       indexFinded = index;
@@ -37,6 +35,7 @@ function findPlayer(playerName, playerRealm, players) {
       index: indexFinded,
     };
   }
+
   return null;
 }
 
