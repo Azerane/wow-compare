@@ -97,19 +97,65 @@ async function getWarcraftLog(playerName, playerRealm, metrics) {
     });
 }
 
+const getRaidProgressionGrade = (raidProgression) => {
+  const raidLength = config.wow_raid.encounters.length;
+  let grade = 0;
+  if (raidProgression.mythic_bosses_killed >= raidLength / 3) grade = 4;
+  else if (raidProgression.heroic_bosses_killed >= raidLength) grade = 3;
+  else if (raidProgression.heroic_bosses_killed >= raidLength / 2) grade = 2;
+  else if (raidProgression.normal_bosses_killed >= raidLength) grade = 1;
+  else grade = 0;
+  return grade;
+};
+
+const getRaideIoScoreGrade = (score) => {
+  let grade = 0;
+  if (score >= 1500) grade = 4;
+  else if (score >= 1000) grade = 3;
+  else if (score >= 750) grade = 2;
+  else if (score >= 500) grade = 1;
+  else grade = 0;
+  return grade;
+};
+
+const getParseGrade = (parse) => {
+  let grade = 0;
+  if (parse >= 80) grade = 4;
+  else if (parse >= 60) grade = 3;
+  else if (parse >= 45) grade = 2;
+  else if (parse >= 30) grade = 1;
+  else grade = 0;
+  return grade;
+};
+
+const getIlvlGrade = (ilvl) => {
+  let grade = 0;
+  if (ilvl >= 390) grade = 4;
+  else if (ilvl >= 380) grade = 3;
+  else if (ilvl >= 375) grade = 2;
+  else if (ilvl >= 370) grade = 1;
+  else grade = 0;
+  return grade;
+};
+
 async function getGrades(playerName, playerRealm, data) {
   const {
     raidProgression, raiderIoScore, ilvl, parseAvg,
   } = data;
+  const progressionGrade = getRaidProgressionGrade(raidProgression);
+  const scoreGrade = getRaideIoScoreGrade(raiderIoScore);
+  const ilvlGrade = getIlvlGrade(ilvl);
+  const parseGrade = getParseGrade(parseAvg);
+  const total = ((progressionGrade + scoreGrade + ilvlGrade + parseGrade) * 14) / 16;
   return {
     name: playerName,
     realm: playerRealm,
     grades: {
-      progression: 0,
-      score: 0,
-      ilvl: 0,
-      parse: 0,
-      total: 0,
+      progression: progressionGrade,
+      score: scoreGrade,
+      ilvl: ilvlGrade,
+      parse: parseGrade,
+      total,
     },
   };
 }
