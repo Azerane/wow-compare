@@ -5,9 +5,9 @@ export const raiderIoSuccess = player => ({
   player,
 });
 
-export const raiderIoFailure = error => ({
+export const raiderIoFailure = player => ({
   type: 'RAIDERIO_FAILURE',
-  error,
+  player,
 });
 
 export const raiderIoRequest = (playerName, playerRealm) => (dispatch) => {
@@ -22,14 +22,31 @@ export const warcraftLogSuccess = player => ({
   player,
 });
 
-export const warcraftLogFailure = error => ({
+export const warcraftLogFailure = player => ({
   type: 'WARCRAFTLOG_FAILURE',
-  error,
+  player,
 });
 
-export const warcraftLogRequest = (playerName, playerRealm) => (dispatch) => {
+export const warcraftLogRequest = (playerName, playerRealm, metrics) => (dispatch) => {
   dispatch({
     type: 'WARCRAFTLOG_REQUEST',
   });
-  return apiServices.getWarcraftLog(playerName, playerRealm);
+  return apiServices.getWarcraftLog(playerName, playerRealm, metrics);
+};
+
+export const gradesSuccess = player => ({
+  type: 'GRADES_SUCCESS',
+  player,
+});
+
+export const gradesFailure = player => ({
+  type: 'GRADES_FAILURE',
+  player,
+});
+
+export const gradesRequest = (playerName, playerRealm, data) => (dispatch) => {
+  dispatch({
+    type: 'GRADES_REQUEST',
+  });
+  return apiServices.getGrades(playerName, playerRealm, data);
 };

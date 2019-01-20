@@ -1,0 +1,14 @@
+body {
+    background-color: #393939;
+    margin: 0px;
+}
+
+.main-container {
+    margin-left: 18%;
+    margin-right: 18%;
+    margin-top: 40px;
+    width: 64%;
+    background-color: white;
+    border: 1px solid #707070;
+    border-radius: 5px;
+}
