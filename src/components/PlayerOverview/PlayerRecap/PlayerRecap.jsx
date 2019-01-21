@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './PlayerRecap.css';
-import { classColor } from '../../../constant';
+import { classColor, itemColor } from '../../../constant';
 
 const getLetterFromGrade = (grade) => {
   const grades = ['D-', 'D', 'D+', 'C-', 'C', 'C+', 'B-', 'B', 'B+', 'A-', 'A', 'A+', 'S-', 'S', 'S+'];
@@ -17,15 +17,50 @@ const getImageFromRole = (role) => {
   return <img src={`/media/${imageName}.png`} alt="role" />;
 };
 
+const getColorFromGrade = (grades, key) => {
+  const colorMapping = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
+  if (typeof (grades) === 'undefined') return 'white';
+  return itemColor[colorMapping[grades[key]]];
+};
+
+const getColorFromTotalGrade = (grades) => {
+  const colorMapping = [
+    'Common',
+    'Common',
+    'Common',
+    'Uncommon',
+    'Uncommon',
+    'Uncommon',
+    'Rare',
+    'Rare',
+    'Rare',
+    'Epic',
+    'Epic',
+    'Epic',
+    'Legendary',
+    'Legendary',
+    'Legendary',
+  ];
+  if (typeof (grades) === 'undefined') return 'white';
+  return itemColor[colorMapping[Math.round(grades.total) - 1]];
+};
+
 const PlayerRecap = ({ player }) => (
   <tr>
     <td>{getImageFromRole(player.role)}</td>
     <td style={{ color: classColor[player.class] }}>
       {player.name}
     </td>
-    <td>{player.grades && player.grades.total && getLetterFromGrade(player.grades.total)}</td>
-    <td>{player.gear && player.gear.item_level_equipped}</td>
-    <td>
+    <td style={{ color: getColorFromTotalGrade(player.grades) }}>
+      {player.grades
+      && player.grades.total
+      && getLetterFromGrade(player.grades.total)}
+    </td>
+    <td style={{ color: getColorFromGrade(player.grades, 'ilvl') }}>
+      {player.gear
+      && player.gear.item_level_equipped}
+    </td>
+    <td style={{ color: getColorFromGrade(player.grades, 'score') }}>
       {player.mythic_plus_scores
         && player.mythic_plus_scores.all
         && player.mythic_plus_scores.all.toFixed(0)}
@@ -45,7 +80,10 @@ const PlayerRecap = ({ player }) => (
       && player.raid_progression.uldir
       && player.raid_progression.uldir.mythic_bosses_killed}
     </td>
-    <td>{player.parses && player.parses.parseAvg}</td>
+    <td style={{ color: getColorFromGrade(player.grades, 'parse') }}>
+      {player.parses
+      && player.parses.parseAvg.toFixed(0)}
+    </td>
   </tr>
 );
 

@@ -94,6 +94,7 @@ class Home extends React.PureComponent {
         <div className="main-container">
           <SearchBar />
           {players.group.length > 0 && <PlayerOverview part="group" />}
+          {players.queue.length > 0 && <PlayerOverview part="queue" />}
         </div>
       </div>);
   }
