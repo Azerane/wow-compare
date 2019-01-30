@@ -44,7 +44,7 @@ const getColorFromTotalGrade = (grades) => {
   ];
   if (typeof (grades) === 'undefined') return 'white';
   return itemColor[colorMapping[Math.round(grades.total) - 1]];
-}
+};
 
 const getColorFromProgress = (current, max) => {
   const middle = max / 2;
@@ -56,7 +56,7 @@ const getColorFromProgress = (current, max) => {
     if (index <= 0) {
       colorValue = 'rgba(255, 0, 0, 0.2)';
     } else if (index >= max) {
-      colorValue = 'rgba(0, 255, 0, 0.8)';
+      colorValue = 'rgba(0, 255, 0, 0.6)';
     } else if (index < middle) {
       colorValue = `rgba(255, ${Math.round(index * scale)}, 0, ${0.2 + current * 0.4 / max})`;
     } else {
@@ -86,51 +86,59 @@ const PlayerRecap = ({ player }) => (
     </td>
     <td style={{ color: getColorFromTotalGrade(player.grades) }}>
       {player.grades
-      && player.grades.total
-      && getLetterFromGrade(player.grades.total)}
+        && player.grades.total
+        && player.grades.total !== 0
+        ? getLetterFromGrade(player.grades.total)
+        : <div />}
     </td>
     <td style={{ color: getColorFromGrade(player.grades, 'ilvl') }}>
       {player.gear
-      && player.gear.item_level_equipped}
+        && player.gear.item_level_equipped !== 0
+        ? player.gear.item_level_equipped
+        : <div />}
     </td>
     <td style={{ color: getColorFromGrade(player.grades, 'score') }}>
       {player.mythic_plus_scores
         && player.mythic_plus_scores.all
-        && player.mythic_plus_scores.all.toFixed(0)}
+        && player.mythic_plus_scores.all.toFixed(0) !== 0
+        ? player.mythic_plus_scores.all.toFixed(0)
+        : <div />}
     </td>
     <td className="progression-lign">
       {player.raid_progression
-      && player.raid_progression.uldir
-      && player.raid_progression.uldir.normal_bosses_killed
-      && (
-      <ProgressionDisplay
-        current={player.raid_progression.uldir.normal_bosses_killed}
-        max={config.wow_raid.encounters.length}
-      />)}
+        && player.raid_progression['battle-of-dazaralor']
+        && player.raid_progression['battle-of-dazaralor'].normal_bosses_killed
+        ? (
+          <ProgressionDisplay
+            current={player.raid_progression['battle-of-dazaralor'].normal_bosses_killed}
+            max={config.wow_raid.encounters.length}
+          />) : <div />}
     </td>
     <td className="progression-lign">
       {player.raid_progression
-      && player.raid_progression.uldir
-      && player.raid_progression.uldir.heroic_bosses_killed
-      && (
-      <ProgressionDisplay
-        current={player.raid_progression.uldir.heroic_bosses_killed}
-        max={config.wow_raid.encounters.length}
-      />)}
+        && player.raid_progression['battle-of-dazaralor']
+        && player.raid_progression['battle-of-dazaralor'].heroic_bosses_killed
+        ? (
+          <ProgressionDisplay
+            current={player.raid_progression['battle-of-dazaralor'].heroic_bosses_killed}
+            max={config.wow_raid.encounters.length}
+          />) : <div />}
     </td>
     <td className="progression-lign">
       {player.raid_progression
-      && player.raid_progression.uldir
-      && player.raid_progression.uldir.mythic_bosses_killed
-      && (
-      <ProgressionDisplay
-        current={player.raid_progression.uldir.mythic_bosses_killed}
-        max={config.wow_raid.encounters.length}
-      />)}
+        && player.raid_progression['battle-of-dazaralor']
+        && player.raid_progression['battle-of-dazaralor'].mythic_bosses_killed
+        ? (
+          <ProgressionDisplay
+            current={player.raid_progression['battle-of-dazaralor'].mythic_bosses_killed}
+            max={config.wow_raid.encounters.length}
+          />) : <div />}
     </td>
     <td style={{ color: getColorFromGrade(player.grades, 'parse') }}>
       {player.parses
-      && player.parses.parseAvg.toFixed(0)}
+        && player.parses.parseAvg !== 0
+        ? player.parses.parseAvg.toFixed(0)
+        : <div />}
     </td>
   </tr>
 );
