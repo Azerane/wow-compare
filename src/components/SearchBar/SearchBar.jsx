@@ -18,7 +18,7 @@ class SearchBar extends React.PureComponent {
   }
 
   handleChange = (event) => {
-    const { getPlayers, refresh } = this.props;
+    const { getPlayers } = this.props;
     this.setState({ value: event.target.value });
     getPlayers(event.target.value);
   };
