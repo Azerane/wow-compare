@@ -56,7 +56,7 @@ const getColorFromProgress = (current, max) => {
     if (index <= 0) {
       colorValue = 'rgba(255, 0, 0, 0.2)';
     } else if (index >= max) {
-      colorValue = 'rgba(0, 255, 0, 0.8)';
+      colorValue = 'rgba(0, 255, 0, 0.6)';
     } else if (index < middle) {
       colorValue = `rgba(255, ${Math.round(index * scale)}, 0, ${0.2 + current * 0.4 / max})`;
     } else {
@@ -106,31 +106,31 @@ const PlayerRecap = ({ player }) => (
     </td>
     <td className="progression-lign">
       {player.raid_progression
-        && player.raid_progression.uldir
-        && player.raid_progression.uldir.normal_bosses_killed
+        && player.raid_progression['battle-of-dazaralor']
+        && player.raid_progression['battle-of-dazaralor'].normal_bosses_killed
         ? (
           <ProgressionDisplay
-            current={player.raid_progression.uldir.normal_bosses_killed}
+            current={player.raid_progression['battle-of-dazaralor'].normal_bosses_killed}
             max={config.wow_raid.encounters.length}
           />) : <div />}
     </td>
     <td className="progression-lign">
       {player.raid_progression
-        && player.raid_progression.uldir
-        && player.raid_progression.uldir.heroic_bosses_killed
+        && player.raid_progression['battle-of-dazaralor']
+        && player.raid_progression['battle-of-dazaralor'].heroic_bosses_killed
         ? (
           <ProgressionDisplay
-            current={player.raid_progression.uldir.heroic_bosses_killed}
+            current={player.raid_progression['battle-of-dazaralor'].heroic_bosses_killed}
             max={config.wow_raid.encounters.length}
           />) : <div />}
     </td>
     <td className="progression-lign">
       {player.raid_progression
-        && player.raid_progression.uldir
-        && player.raid_progression.uldir.mythic_bosses_killed
+        && player.raid_progression['battle-of-dazaralor']
+        && player.raid_progression['battle-of-dazaralor'].mythic_bosses_killed
         ? (
           <ProgressionDisplay
-            current={player.raid_progression.uldir.mythic_bosses_killed}
+            current={player.raid_progression['battle-of-dazaralor'].mythic_bosses_killed}
             max={config.wow_raid.encounters.length}
           />) : <div />}
     </td>
