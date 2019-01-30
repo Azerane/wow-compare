@@ -24,15 +24,28 @@ class Home extends React.PureComponent {
       players,
     } = this.props;
     const oldPlayers = prevProps.players;
-    if (players.group.length !== oldPlayers.group.length
-      || players.queue.length !== oldPlayers.queue.length) {
+    if (!this.arrayCompare(players.group, oldPlayers.group)) {
+      console.warn('refresh group');
       players.group.forEach((player) => {
         this.fetchData(player);
       });
+    }
+    if (!this.arrayCompare(players.queue, oldPlayers.queue)) {
+      console.warn('refresh queue');
       players.queue.forEach((player) => {
         this.fetchData(player);
       });
     }
+  }
+
+  arrayCompare = (array1, array2) => {
+    if (array1.length !== array2.length) return false;
+    if (array1.length === 0) return true;
+    let isSame = true;
+    array1.forEach((element, index) => {
+      if (element.name !== array2[index].name) isSame = false;
+    });
+    return isSame;
   }
 
   fetchData = (player) => {
