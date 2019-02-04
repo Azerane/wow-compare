@@ -17,6 +17,7 @@ import './Home.css';
 import Header from './Header/Header';
 import SearchBar from './SearchBar/SearchBar';
 import PlayerOverview from './PlayerOverview/PlayerOverview';
+import ClassRepartitionGraph from './ClassRepartitionGraph/ClassRepartitionGraph';
 
 class Home extends React.PureComponent {
   componentDidUpdate(prevProps) {
@@ -25,13 +26,11 @@ class Home extends React.PureComponent {
     } = this.props;
     const oldPlayers = prevProps.players;
     if (!this.arrayCompare(players.group, oldPlayers.group)) {
-      console.warn('refresh group');
       players.group.forEach((player) => {
         this.fetchData(player);
       });
     }
     if (!this.arrayCompare(players.queue, oldPlayers.queue)) {
-      console.warn('refresh queue');
       players.queue.forEach((player) => {
         this.fetchData(player);
       });
@@ -106,6 +105,7 @@ class Home extends React.PureComponent {
         <Header />
         <div className="main-container">
           <SearchBar />
+          {players.group.length > 0 && <ClassRepartitionGraph group={players.group} />}
           {players.group.length > 0 && <PlayerOverview part="group" />}
           {players.queue.length > 0 && <PlayerOverview part="queue" />}
         </div>
