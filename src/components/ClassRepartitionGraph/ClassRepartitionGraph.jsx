@@ -36,14 +36,16 @@ const CustomizedAxisTick = (props) => {
 CustomizedAxisTick.propTypes = {
   payload: PropTypes.shape(),
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
+  x: PropTypes.number,
+  y: PropTypes.number,
 };
 
 CustomizedAxisTick.defaultProps = {
   payload: {
     index: 0,
   },
+  x: 0,
+  y: 0,
 };
 
 const getPlayersByClass = (group, className) => (
@@ -52,10 +54,12 @@ const getPlayersByClass = (group, className) => (
 
 const CustomTooltip = (props) => {
   const {
-    active, data, payload, group,
+    active, payload, group,
   } = props;
-  const { index } = payload;
-  const { className } = data[index];
+  if (payload.length === 0) {
+    return null;
+  }
+  const { className } = payload[0].payload;
   let playerArray = [];
   if (typeof (className) !== 'undefined') {
     playerArray = getPlayersByClass(group, className);
@@ -69,6 +73,11 @@ const CustomTooltip = (props) => {
             {className}
           </div>
         </div>
+        <div className="content">
+          {playerArray.map(player => (
+            <div>{`${player.name} - ${player.realm}`}</div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -77,7 +86,6 @@ const CustomTooltip = (props) => {
 
 CustomTooltip.propTypes = {
   payload: PropTypes.shape(),
-  data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   group: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   active: PropTypes.bool.isRequired,
 };
@@ -107,7 +115,7 @@ const ClassRepartitionGraph = (props) => {
             interval={0}
             tick={<CustomizedAxisTick data={classRepartition} />}
           />
-          <Tooltip content={<CustomTooltip data={classRepartition} group={group} />} />
+          <Tooltip content={CustomTooltip} group={group} />
           <Bar
             dataKey="amount"
             radius={[10, 10, 0, 0]}
