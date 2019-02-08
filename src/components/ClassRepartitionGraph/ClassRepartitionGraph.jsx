@@ -2,7 +2,7 @@ import React from 'react';
 import './ClassRepartitionGraph.css';
 import PropTypes from 'prop-types';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell, Tooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, XAxis, Cell, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import { classArray, classColor } from '../../constant';
 
@@ -64,18 +64,20 @@ const CustomTooltip = (props) => {
   if (typeof (className) !== 'undefined') {
     playerArray = getPlayersByClass(group, className);
   }
-  if (active) {
+  if (active && playerArray.length !== 0) {
     return (
       <div className="custom-tooltip">
         <div className="custom-tooltip-header">
-          <div className="custom-tooltip-icon" />
-          <div className="custom-tooltip-title">
+          <div className="custom-tooltip-icon">
+            <img src={`/media/classIcon/${className.replace(/\s/g, '').toLowerCase()}.svg`} alt="class icon" />
+          </div>
+          <div className="custom-tooltip-title" style={{ color: classColor[className] }}>
             {className}
           </div>
         </div>
-        <div className="content">
+        <div className="custom-tooltip-content">
           {playerArray.map(player => (
-            <div>{`${player.name} - ${player.realm}`}</div>
+            <div key={player.name + player.realm} style={{ color: classColor[className] }}>{`${player.name} - ${player.realm}`}</div>
           ))}
         </div>
       </div>

@@ -22,3 +22,37 @@
     background-color: white;
     margin-bottom: 20px;
 }
+
+.custom-tooltip {
+    background-color: #393939;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.custom-tooltip-header {
+    height: 80px;
+    line-height: 80px;
+    margin-bottom: 20px;
+}
+
+.custom-tooltip-icon {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    vertical-align: middle
+}
+
+.custom-tooltip-title {
+    display: inline-block;
+    font-size: 30px;
+    margin-left: 20px;
+    font-weight: bold;
+    vertical-align: middle;
+    height: 80px;
+}
+
+.custom-tooltip-content {
+    font-size: 20px;
+    margin-bottom: 4px
+}
