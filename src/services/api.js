@@ -130,10 +130,10 @@ const getParseGrade = (parse) => {
 
 const getIlvlGrade = (ilvl) => {
   let grade = 0;
-  if (ilvl >= 390) grade = 4;
-  else if (ilvl >= 380) grade = 3;
-  else if (ilvl >= 375) grade = 2;
-  else if (ilvl >= 370) grade = 1;
+  if (ilvl >= 415) grade = 4;
+  else if (ilvl >= 400) grade = 3;
+  else if (ilvl >= 390) grade = 2;
+  else if (ilvl >= 380) grade = 1;
   else grade = 0;
   return grade;
 };

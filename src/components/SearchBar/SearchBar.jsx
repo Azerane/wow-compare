@@ -13,7 +13,7 @@ class SearchBar extends React.PureComponent {
   }
 
   componentDidMount() {
-    const wowImport = '{"group":["2-Azesp-hyjal","1-Zoomy-aegwynn","1-Randõm-hyjal","1-Snerz-elune","1-Кугдабыра-blackscar","1-Dott-the-maelstrom","1-Bìnk-khaz-modan","1-Molvaine-silvermoon","1-Rizogaloo-silvermoon","1-Rhuy-outland","2-Infinitypro-argent-dawn","4-Ullabull-frostmane"],"queue":["1-Labrique-bloodhoof","1-Лялялол-blackscar","1-Nutellus-pozzo-delleternita","1-Kellekanon-the-maelstrom"],"activity":495,"region":"eu"}';
+    const wowImport = '{"group":["1-Marcethemage-pozzo-delleternita","4-Lectør-pozzo-delleternita","4-Ehtelwen-pozzo-delleternita","1-Dozzle-pozzo-delleternita","1-Lunacrescia-pozzo-delleternita","1-Fridar-pozzo-delleternita","1-Noeren-pozzo-delleternita","1-Erentross-pozzo-delleternita","1-Flicchete-pozzo-delleternita","1-Melmaryllis-pozzo-delleternita","1-Threshold-ysondre","1-Malfattore-pozzo-delleternita","1-Hynlänn-pozzo-delleternita","1-Hugolino-pozzo-delleternita","1-Laisers-pozzo-delleternita","1-Simonceeno-pozzo-delleternita","2-Stopdirnimp-ysondre","2-Lexkradok-pozzo-delleternita","2-Azerane-ysondre"],"queue":["1-Ataría-blackrock","2-Magareork-kazzak","2-Aiced-aggra-portugues","1-Monpierrejr-twisting-nether","1-Ёрка-deathguard"],"activity":664,"region":"eu"}';
     this.setState({ value: wowImport });
   }
 

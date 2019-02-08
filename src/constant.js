@@ -13,6 +13,21 @@ export const classColor = {
   Warrior: '#C79C6E',
 };
 
+export const classArray = [
+  'Death Knight',
+  'Demon Hunter',
+  'Druid',
+  'Hunter',
+  'Mage',
+  'Monk',
+  'Paladin',
+  'Priest',
+  'Rogue',
+  'Shaman',
+  'Warlock',
+  'Warrior',
+];
+
 export const itemColor = {
   Poor: '#9d9d9d',
   Common: '#ffffff',
