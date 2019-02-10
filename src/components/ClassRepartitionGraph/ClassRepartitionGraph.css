@@ -56,3 +56,18 @@
     font-size: 20px;
     margin-bottom: 4px
 }
+
+.custom-tooltip-spec-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.custom-tooltip-player {
+    margin-bottom: 10px;
+}
+
+.custom-tooltip-player-text {
+    display: inline-block;
+    vertical-align: middle;
+}
