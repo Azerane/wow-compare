@@ -20,6 +20,12 @@ const getClassRepartition = (group) => {
   return classRepartition;
 };
 
+const getClassIcon = (className, spec) => (
+  <div className="custom-tooltip-spec-icon">
+    <img src={`/media/${className.replace(/\s/g, '').toLowerCase()}/${spec.replace(/\s/g, '').toLowerCase()}.gif`} alt="class spec" />
+  </div>
+);
+
 const CustomizedAxisTick = (props) => {
   const {
     x, y, payload, data,
@@ -77,7 +83,12 @@ const CustomTooltip = (props) => {
         </div>
         <div className="custom-tooltip-content">
           {playerArray.map(player => (
-            <div key={player.name + player.realm} style={{ color: classColor[className] }}>{`${player.name} - ${player.realm}`}</div>
+            <div className="custom-tooltip-player">
+              {getClassIcon(className, player.active_spec_name)}
+              <div className="custom-tooltip-player-text" key={player.name + player.realm} style={{ color: classColor[className] }}>
+                {`${player.name} - ${player.realm}`}
+              </div>
+            </div>
           ))}
         </div>
       </div>
