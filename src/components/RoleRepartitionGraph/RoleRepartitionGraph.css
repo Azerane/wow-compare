@@ -1,4 +1,4 @@
-.class-repartition-container {
+.role-repartition-container {
     margin: 20px;
     width: calc(50% - 82px);
     background-color: #393939;
@@ -10,14 +10,14 @@
     display: inline-block;
 }
 
-.class-repartition-title {
+.role-repartition-title {
     font-size: 18px;
     color: white;
     line-height: 65px;
     text-transform: capitalize;
 }
 
-.class-repartition-separator {
+.role-repartition-separator {
     width: 100%;
     height: 1px;
     background-color: white;

@@ -128,7 +128,7 @@ const ClassRepartitionGraph = (props) => {
             interval={0}
             tick={<CustomizedAxisTick data={classRepartition} />}
           />
-          <Tooltip content={CustomTooltip} group={group} />
+          <Tooltip cursor={false} content={CustomTooltip} group={group} />
           <Bar
             dataKey="amount"
             radius={[10, 10, 0, 0]}
