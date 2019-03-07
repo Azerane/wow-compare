@@ -19,6 +19,7 @@ import SearchBar from './SearchBar/SearchBar';
 import PlayerOverview from './PlayerOverview/PlayerOverview';
 import ClassRepartitionGraph from './ClassRepartitionGraph/ClassRepartitionGraph';
 import RoleRepartitionGraph from './RoleRepartitionGraph/RoleRepartitionGraph';
+import MissingBuff from './MissingBuff/MissingBuff';
 
 class Home extends React.PureComponent {
   componentDidUpdate(prevProps) {
@@ -108,6 +109,7 @@ class Home extends React.PureComponent {
           <SearchBar />
           {players.group.length > 0 && <ClassRepartitionGraph group={players.group} />}
           {players.group.length > 0 && <RoleRepartitionGraph group={players.group} />}
+          {players.group.length > 0 && <MissingBuff group={players.group} />}
           {players.group.length > 0 && <PlayerOverview part="group" />}
           {players.queue.length > 0 && <PlayerOverview part="queue" />}
         </div>
