@@ -16,6 +16,10 @@ import {
 import './Home.css';
 import Header from './Header/Header';
 import SearchBar from './SearchBar/SearchBar';
+import PlayerOverview from './PlayerOverview/PlayerOverview';
+import ClassRepartitionGraph from './ClassRepartitionGraph/ClassRepartitionGraph';
+import RoleRepartitionGraph from './RoleRepartitionGraph/RoleRepartitionGraph';
+import MissingBuff from './MissingBuff/MissingBuff';
 
 class Home extends React.PureComponent {
   componentDidUpdate(prevProps) {
@@ -23,15 +27,26 @@ class Home extends React.PureComponent {
       players,
     } = this.props;
     const oldPlayers = prevProps.players;
-    if (players.group.length !== oldPlayers.group.length
-      || players.queue.length !== oldPlayers.queue.length) {
+    if (!this.arrayCompare(players.group, oldPlayers.group)) {
       players.group.forEach((player) => {
         this.fetchData(player);
       });
+    }
+    if (!this.arrayCompare(players.queue, oldPlayers.queue)) {
       players.queue.forEach((player) => {
         this.fetchData(player);
       });
     }
+  }
+
+  arrayCompare = (array1, array2) => {
+    if (array1.length !== array2.length) return false;
+    if (array1.length === 0) return true;
+    let isSame = true;
+    array1.forEach((element, index) => {
+      if (element.name !== array2[index].name) isSame = false;
+    });
+    return isSame;
   }
 
   fetchData = (player) => {
@@ -86,11 +101,17 @@ class Home extends React.PureComponent {
   }
 
   render() {
+    const { players } = this.props;
     return (
       <div>
         <Header />
         <div className="main-container">
           <SearchBar />
+          {players.group.length > 0 && <ClassRepartitionGraph group={players.group} />}
+          {players.group.length > 0 && <RoleRepartitionGraph group={players.group} />}
+          {players.group.length > 0 && <MissingBuff group={players.group} />}
+          {players.group.length > 0 && <PlayerOverview part="group" />}
+          {players.queue.length > 0 && <PlayerOverview part="queue" />}
         </div>
       </div>);
   }

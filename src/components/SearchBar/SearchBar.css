@@ -1,6 +1,6 @@
 .input-bar {
-    margin: 40px;
-    width: calc(100% - 120px);
+    margin: 20px;
+    width: calc(100% - 80px);
     background-color: #393939;
     border: 1px solid #707070;
     border-radius: 5px;
