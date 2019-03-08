@@ -11,8 +11,8 @@ import configureStore from './store/configureStore';
 const store = configureStore();
 
 const productionScript = () => {
-  const deployMode = process.env.REACT_APP_DEPLOY_MODE;
-  if (deployMode === 'production') {
+  const regex = /.*https:\/\/wow-compare\.herokuapp\.com.*/;
+  if (regex.test(window.location.href)) {
     // Google analytics
     ReactGA.initialize('UA-132360927-1');
     // Fullstory
